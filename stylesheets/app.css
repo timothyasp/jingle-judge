@@ -1,0 +1,24 @@
+/* Foundation v2.1.4 http://foundation.zurb.com */
+/* Artfully masterminded by ZURB  */
+/* Startup-weekend Jingle Team Style  */
+
+/* -------------------------------------------------- 
+   Table of Contents
+-----------------------------------------------------
+:: Shared Styles
+*/
+
+
+.push { height: 150px; }
+.form-text { text-align: left; }
+
+
+/* -----------------------------------------
+   Shared Styles
+----------------------------------------- */
+
+.center-text { text-align: center; }
+.center-text input[type="text"] { margin: 0 0 16px 32px; }
+.center-text h1 { margin-top: 0px; }
+
+
