@@ -8,14 +8,13 @@
 :: Shared Styles
 */
 
-
-.push { height: 150px; }
-.form-text { text-align: left; }
-
-
 /* -----------------------------------------
    Shared Styles
 ----------------------------------------- */
+
+html, body { background: url('../images/backgrounds/linen_texture_huge.jpg') repeat; }
+
+.push { margin-top: 17%; display: block; }
 
 .center-text { text-align: center; }
 .center-text input[type="text"] { margin: 0 0 16px 32px; }
