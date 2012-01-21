@@ -21,4 +21,5 @@
 .center-text input[type="text"] { margin: 0 0 16px 32px; }
 .center-text h1 { margin-top: 0px; }
 
+.search { background: url('../images/magnifying_glass.gif') no-repeat; opacity: .6; width: 15px; height: 15px; position: absolute; right: 64px; bottom: 26px; }
 
