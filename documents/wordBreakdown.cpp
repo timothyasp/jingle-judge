@@ -1,4 +1,21 @@
-typedef string phone;
+
+#include <stdlib.h>
+#include <string>
+#include <vector>
+#include <sstream>
+#include <iostream>
+
+using namespace std;
+
+typedef string phone ;
+
+
+vector<string> findAllPermutations(string orthoPhrase);
+void DDDDDDDDDDDEBUG(string s);
+vector<string> strTokOnWhitespace(string phrase);
+vector<string> interpretPhrase( vector<phone> sampaPhrase );
+
+//#define phone string
 
 
 vector<string> findAllPermutations(string orthoPhrase) {
@@ -7,16 +24,21 @@ vector<string> findAllPermutations(string orthoPhrase) {
 	vector<string> orthoWords = strTokOnWhitespace( orthoPhrase );
 	vector<phone> sampaPhrase;
 
-	for( string& orthoWord : orthoWords ) {
+	//for( string& orthoWord: orthoWords ) {
+   for (int i = 0; i < orthoWords.size(); i++) {
+      string orthoWord = orthoWords[i];
 		vector<phone> sampaWord = getSampa( orthoWord );
 		sampaPhrase.insert( sampaPhrase.end(), sampaWord.begin(), sampaWord.end() );
 	}	
 
 	vector<string> misheard = interpretPhrase( sampaPhrase );
 	
-	for( string& s : misheard ) {
-		DDDDDDDDDDDEBUG(s);
+	//for( string& s : misheard ) {
+	for (int i = 0; i < misheard.size(); i++) {
+      string s = misheard[i];
+      DDDDDDDDDDDEBUG(s);
 	}	
+
 
 	return misheard;
 
@@ -31,8 +53,7 @@ vector<string> findAllPermutations(string orthoPhrase) {
 	
 	//if I hit a dead end, where I still have phonemes left
 	// --> for now, append "empty" and return it, as a debug tool
-	
-	
+
 }
 	
 void DDDDDDDDDDDEBUG(string s) {
@@ -40,8 +61,15 @@ void DDDDDDDDDDDEBUG(string s) {
 }
 
 vector<string> strTokOnWhitespace(string phrase) {
-	assert(); //DE-PERLIFY!
-	return split(/\s/); //split on any whitespace character
+	//assert(); //DE-PERLIFY!
+   //return split(/\s/); //split on any whitespace character
+   string temp;
+   stringstream ss(phrase);
+   vector<string> tokens;
+   
+   while (phrase >> temp) {
+      tokens.push_back(temp);
+   }
 }
 
 vector<string> interpretPhrase( vector<phone> sampaPhrase ) {
@@ -50,10 +78,14 @@ vector<string> interpretPhrase( vector<phone> sampaPhrase ) {
 		misheardOrthoPhrases.push_back("");
 		return misheardOrthoPhrases;
 	}
-	int offset = 0;
+   
+   
 	string sampaStr = "";
 	vector <phone> usedPhones;
-	for ( phone& p : sampaPhrase ) {
+   
+   //for ( phone& p : sampaPhrase ) {
+   for (int i = 0; i < sampaPhrase.size(); i++) {
+      phone p = sampaPhrase[i];
 		sampaStr += p;
 		usedPhones.push_back(p);
 		vector<string> orthoMatches = dictLookup( sampaStr );
@@ -61,8 +93,10 @@ vector<string> interpretPhrase( vector<phone> sampaPhrase ) {
 			misheardOrthoPhrases.push_back("DEADBEEF");
 			return misheardOrthoPhrases;
 		}
-		for ( string& orthoWord : orthoMatches ) {
-			vector<phone> sampaPharseTail( sampaPhrase.begin(), sampaPhrase.begin()+offset );
+      //for ( string& orthoWord : orthoMatches ) {
+      for (int i = 0; i < orthoMatches.size(); i++) {
+         string orthoWord = orthoMatches[i];
+			vector<phone> sampaPharseTail( sampaPhrase.begin(), sampaPhrase.begin() + i );
 			vector<string> orthoLeaves = interpretPhrase ( sampaPhraseTail );
 			if ( orthoLeaves.size() == 0 ) {
 				misheardOrthoPhrases.push_back( orthoWord.append( "DEADBEEF" ) );
@@ -72,15 +106,12 @@ vector<string> interpretPhrase( vector<phone> sampaPhrase ) {
 					misheardOrthoPhrases.push_back( orthoWord + orthoLeaf() );
 				}
 			}
-			
-			  
 		}
-		offset++;
 	}
 	return misheardOrthoPhrases;
 }
 
-
+/*
 vector<string>  getPhrasePhonemes(string phrase) {
 	vector<string> phrasePhones;;
 	vector<string> words = split(/\s/); //split on any whitespace character
@@ -95,16 +126,16 @@ vector<string>  getPhrasePhonemes(string phrase) {
 }
 string[] getSAMPAForPhrase(string orthoWord) {
 	//lookup in dictionary
-/*	split sampa phrase
+	split sampa phrase
 	$src_SAMPA =~ s/\s$//; #remove trailing whitespace;
-	$src_SAMPA =~ s/^\s*//; # remove leading whitespace.
+	$src_SAMPA =~ s#^\s*##; # remove leading whitespace.
 	
 	print OUTFILE "$src_SAMPA\t";
 	print OUTFILE ":\t";
 	print "$src_SAMPA\t";
 
 	@array_src_SAMPA = split (/[\$|%|\"]/, $src_SAMPA);
-*/	
+	
 	//return split sampa phrase
 }
 
@@ -117,5 +148,5 @@ vector<PhoneWithIndex> embedPhoneOrder(vector<string> phones) {
 	}
 	return toRet;
 }
-
+*/
 
