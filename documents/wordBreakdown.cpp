@@ -4,6 +4,7 @@
 #include <vector>
 #include <sstream>
 #include <iostream>
+#include <assert.h>
 
 using namespace std;
 
@@ -14,8 +15,15 @@ vector<string> findAllPermutations(string orthoPhrase);
 void DDDDDDDDDDDEBUG(string s);
 vector<string> strTokOnWhitespace(string phrase);
 vector<string> interpretPhrase( vector<phone> sampaPhrase );
+vector<phone> getSampa( string orthoWord );
+string queryDBforSAMPA( string orthoWord );
+vector<phone> parseSAMPAintoPhonemes( string sampaString );
+vector<string> dictLookup( string sampaStr ); 
 
-//#define phone string
+
+int main() {
+   return 0;
+}
 
 
 vector<string> findAllPermutations(string orthoPhrase) {
@@ -24,7 +32,6 @@ vector<string> findAllPermutations(string orthoPhrase) {
 	vector<string> orthoWords = strTokOnWhitespace( orthoPhrase );
 	vector<phone> sampaPhrase;
 
-	//for( string& orthoWord: orthoWords ) {
    for (int i = 0; i < orthoWords.size(); i++) {
       string orthoWord = orthoWords[i];
 		vector<phone> sampaWord = getSampa( orthoWord );
@@ -33,7 +40,6 @@ vector<string> findAllPermutations(string orthoPhrase) {
 
 	vector<string> misheard = interpretPhrase( sampaPhrase );
 	
-	//for( string& s : misheard ) {
 	for (int i = 0; i < misheard.size(); i++) {
       string s = misheard[i];
       DDDDDDDDDDDEBUG(s);
@@ -42,48 +48,62 @@ vector<string> findAllPermutations(string orthoPhrase) {
 
 	return misheard;
 
-	//vector<string> phonemeBreakdown = getPhrasePhonemes(phrase);	
-	//vector<PhoneWithIndex> origPhonePhrase = embedPhoneOrder(phonemeBreakdown);
-	//for( PhoneWithIndex pi : origPhonePhrase ) {
-	//}
-	
-	//get all words that start with first phoneme
-	//for each of those words, run a parser on the rest of the phrase (recurse)
-	
-	
-	//if I hit a dead end, where I still have phonemes left
-	// --> for now, append "empty" and return it, as a debug tool
-
 }
 	
 void DDDDDDDDDDDEBUG(string s) {
 	cout << s << endl;	
 }
 
+//http://www.daniweb.com/software-development/cpp/threads/27905
 vector<string> strTokOnWhitespace(string phrase) {
-	//assert(); //DE-PERLIFY!
-   //return split(/\s/); //split on any whitespace character
    string temp;
    stringstream ss(phrase);
    vector<string> tokens;
    
-   while (phrase >> temp) {
+   //while (phrase >> temp) {
+   while ( getline(ss, temp, ' ') ) {
       tokens.push_back(temp);
    }
+   return tokens;
 }
+
+vector<phone> getSampa( string orthoWord ) {
+   string sampaString = queryDBforSAMPA( orthoWord );
+   vector<phone> sampaWord = parseSAMPAintoPhonemes( sampaString );
+   return sampaWord;
+}
+
+
+string queryDBforSAMPA( string orthoWord ) {
+   assert(0); // PUT SQL QUERY HERE
+   return "";
+}
+
+vector<phone> parseSAMPAintoPhonemes( string sampaString ) {
+   vector<phone> sampaSylls;
+   assert(0); // break string into phonemes
+   
+   return sampaSylls;
+}
+
+vector<string> dictLookup( string sampaStr ) {
+   vector<string> orthoMatches;
+   assert(0); // PUT SQL QUERY HERE
+   return orthoMatches;
+}
+
 
 vector<string> interpretPhrase( vector<phone> sampaPhrase ) {
 	vector<string> misheardOrthoPhrases;
+   
 	if( sampaPhrase.size() == 0 ) {
 		misheardOrthoPhrases.push_back("");
 		return misheardOrthoPhrases;
 	}
-   
-   
-	string sampaStr = "";
+	
+   string sampaStr = "";
 	vector <phone> usedPhones;
    
-   //for ( phone& p : sampaPhrase ) {
    for (int i = 0; i < sampaPhrase.size(); i++) {
       phone p = sampaPhrase[i];
 		sampaStr += p;
@@ -93,23 +113,28 @@ vector<string> interpretPhrase( vector<phone> sampaPhrase ) {
 			misheardOrthoPhrases.push_back("DEADBEEF");
 			return misheardOrthoPhrases;
 		}
-      //for ( string& orthoWord : orthoMatches ) {
+
       for (int i = 0; i < orthoMatches.size(); i++) {
          string orthoWord = orthoMatches[i];
-			vector<phone> sampaPharseTail( sampaPhrase.begin(), sampaPhrase.begin() + i );
+			vector<phone> sampaPhraseTail( sampaPhrase.begin(), sampaPhrase.begin() + i );
 			vector<string> orthoLeaves = interpretPhrase ( sampaPhraseTail );
 			if ( orthoLeaves.size() == 0 ) {
 				misheardOrthoPhrases.push_back( orthoWord.append( "DEADBEEF" ) );
 				return misheardOrthoPhrases;
 			} else {
-				for( string& orthoLeaf : orthoLeaves ) {
-					misheardOrthoPhrases.push_back( orthoWord + orthoLeaf() );
+                        
+            for (int i = 0; i < orthoLeaves.size(); i++) {
+               string orthoLeaf = orthoLeaves[i];
+					misheardOrthoPhrases.push_back( orthoWord + orthoLeaf );
 				}
+            
 			}
 		}
 	}
 	return misheardOrthoPhrases;
 }
+
+
 
 /*
 vector<string>  getPhrasePhonemes(string phrase) {
