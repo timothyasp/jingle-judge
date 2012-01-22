@@ -22,6 +22,14 @@ vector<string> dictLookup( string sampaStr );
 
 
 int main() {
+   cout << "HTTP/1.1 200 OK\n";
+   cout << "Cache-Control: private\n";
+   cout << "Content-Type: text/plain\n";
+   cout << "Server: bash/2.0\n";
+   cout << "Connection: Close\n";
+   cout << "Content-Length: 4\n";
+   cout << "\n";
+   cout << "foo\n";
    return 0;
 }
 
