@@ -1,0 +1,64 @@
+1) Get string
+2) Grab words from string
+For each word
+	- split i
+
+struct LocPhone {
+	int i;
+	string ph;
+	LocPhone( int i_param, string str) : i(i_param), ph(str) {
+	}
+}
+
+vector<string> findPermutations(string phrase) {
+	vector<string> phonemeBreakdown = getPhrasePhonemes(phrase);	
+	//vector<PhoneWithIndex> origPhonePhrase = embedPhoneOrder(phonemeBreakdown);
+	//for( PhoneWithIndex pi : origPhonePhrase ) {
+	//}
+	
+}
+
+vector<PhoneWithIndex> embedPhoneOrder(vector<string> phones) {
+	vector<PhoneWithIndex> toRet;
+	int i = 0;
+	for( string s : phones) {
+		toRet.add( LocPhone(i++, s) );  
+	}
+	return toRet;
+}
+
+vector<string>  getPhrasePhonemes(string phrase) {
+	vector<string> phrasePhones;;
+	vector<string> words = split(/\s/); //split on any whitespace character
+
+	for ( string s : words) {
+		vector<string> sampleSylls = getSAMPAForPhrase(s);
+		//append to end
+		phrasePhones.insert( phrasePhones.end(), 
+			sampaSylls.begin(), sampaSylls.end() );			
+	}
+	return phrasePhones;
+}
+
+vector<string> strTokOnWhitespace(string phrase) {
+	assert(); //DE-PERLIFY!
+	return split(/\s/); //split on any whitespace character
+}
+
+string[] getSAMPAForPhrase(string orthoWord) {
+	//lookup in dictionary
+/*	split sampa phrase
+	$src_SAMPA =~ s/\s$//; #remove trailing whitespace;
+	$src_SAMPA =~ s/^\s*//; # remove leading whitespace.
+	
+	print OUTFILE "$src_SAMPA\t";
+	print OUTFILE ":\t";
+	print "$src_SAMPA\t";
+
+	@array_src_SAMPA = split (/[\$|%|\"]/, $src_SAMPA);
+*/	
+	//return split sampa phrase
+}
+
+
+
