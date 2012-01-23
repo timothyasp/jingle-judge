@@ -28,14 +28,18 @@ int main() {
    cout << "Content-Type: text/plain\n";
    cout << "Server: bash/2.0\n";
    cout << "Connection: Close\n";
-   cout << "Content-Length: 400\n";
-   cout << "\n";
-   cout << "foo\n";
+
+   string output = "";
    vector<string> sampaPhrase = splitSampaIntoLetters("{bdZEkt");
    for (int i=0; i < sampaPhrase.size(); i++) {
-      cout << sampaPhrase.at(i) << " ";
+      output.append(sampaPhrase.at(i) + " ");
    }
+   output.append("\n");
+
+   cout << "Content-Length: " << output.size() << "\n";
    cout << "\n";
+
+   cout << output;
    return 0;
 }
 
