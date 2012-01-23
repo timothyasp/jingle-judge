@@ -19,6 +19,7 @@ vector<phone> getSampa( string orthoWord );
 string queryDBforSAMPA( string orthoWord );
 vector<phone> parseSAMPAintoPhonemes( string sampaString );
 vector<string> dictLookup( string sampaStr ); 
+vector<string> splitSampaIntoLetters( string phrase );
 
 
 int main() {
@@ -27,9 +28,14 @@ int main() {
    cout << "Content-Type: text/plain\n";
    cout << "Server: bash/2.0\n";
    cout << "Connection: Close\n";
-   cout << "Content-Length: 4\n";
+   cout << "Content-Length: 400\n";
    cout << "\n";
    cout << "foo\n";
+   vector<string> sampaPhrase = splitSampaIntoLetters("{bdZEkt");
+   for (int i=0; i < sampaPhrase.size(); i++) {
+      cout << sampaPhrase.at(i) << " ";
+   }
+   cout << "\n";
    return 0;
 }
 
@@ -142,6 +148,47 @@ vector<string> interpretPhrase( vector<phone> sampaPhrase ) {
 	return misheardOrthoPhrases;
 }
 
+vector<string> splitSampaIntoLetters(string phrase) {
+   vector<string> tokens;
+   string sampaCharacter;
+   
+   for (size_t i=0; i < phrase.length(); i++) {
+      // We're not at the last character
+      if (i+1 < phrase.length()) {
+         // Get a two-character set.
+         sampaCharacter = phrase.substr(i, 2);
+	 if (sampaCharacter == "@`"
+          || sampaCharacter == "`r"
+          || sampaCharacter == "3`"
+          || sampaCharacter == "A`"
+          || sampaCharacter == "aI"
+          || sampaCharacter == "aU"
+          || sampaCharacter == "dZ"
+          || sampaCharacter == "E`"
+          || sampaCharacter == "I`"
+          || sampaCharacter == "jU"
+          || sampaCharacter == "ju"
+          || sampaCharacter == "l="
+          || sampaCharacter == "m="
+          || sampaCharacter == "n="
+          || sampaCharacter == "O`"
+          || sampaCharacter == "OI"
+          || sampaCharacter == "oU"
+          || sampaCharacter == "ou"
+          || sampaCharacter == "tS"
+          || sampaCharacter == "U`") {
+	    // We're good.  Skip the second character for purpose of the loop.
+	    i++;
+         } else {
+            sampaCharacter = phrase.at(i);
+         }
+      } else {
+         sampaCharacter = phrase.at(i);
+      }
+      tokens.push_back(sampaCharacter);
+   }
+   return tokens;
+}
 
 
 /*
